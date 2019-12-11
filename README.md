@@ -26,4 +26,4 @@ $ nasm boot.s -o boot.img -l boot.lst
 $ qemu-system-i386 -rtc base=localtime -drive file=boot.img,format=raw -boot order=c -curses
 ```
 
-Need to stop container to terminate.
+Need stop container to terminate or kill the corresponding process like `ps aux | grep [q]emu-system-i386 | awk '{print $2}' | xargs kill`.
