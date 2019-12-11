@@ -3,7 +3,7 @@ read_chs:
     ; Construct stack frame
     ;-----------------------
                            ; +8 | copy destination
-                           ; +4 | sector number
+                           ; +6 | sector number
                            ; +4 | parameter buffer
                            ; +2 | IP (return address)
     push   bp              ; BP + 0 | BP
