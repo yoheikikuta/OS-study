@@ -3,3 +3,5 @@
     BOOT_SIZE  equ  (1024 * 8)  ; Size of booot code
     SECT_SIZE  equ  (512)  ; Size of sector
     BOOT_SECT  equ  (BOOT_SIZE / SECT_SIZE)  ; Sector number of boot program
+
+    E820_RECORD_SIZE  equ  20
