@@ -150,10 +150,10 @@ stage_2:
     ;-----------------------
 .s0  db "2nd stage...", 0x0A, 0x0D, 0
 .s1  db " Drive:0x"
-.p1  db "  , C:0x"
-.p2  db "    , H:0x"
-.p3  db "  , S:0x"
-.p4  db " ", 0x0A, 0x0D, 0
+.p1  db "XX, C:0x"
+.p2  db "XXXX, H:0x"
+.p3  db "XX, S:0x"
+.p4  db "XX", 0x0A, 0x0D, 0
 
 .e0  db "Can't get drive parameters.", 0
 
