@@ -26,7 +26,7 @@ KBC_Data_Write:
 
     mov    al, [bp + 4]
     out    0x60, al
-.20E
+.20E:
     mov    ax, cx
 
     ;-----------------------
@@ -74,7 +74,7 @@ KBC_Data_Read:
 
     mov    di, [bp + 4]    ; DI = ptr
     mov    [di + 0], ax    ; DI[0] = AX
-.20E
+.20E:
     mov    ax, cx
 
     ;-----------------------
@@ -119,7 +119,7 @@ KBC_Cmd_Write:
 
     mov    al, [bp + 4]
     out    0x64, al
-.20E
+.20E:
     mov    ax, cx
 
     ;-----------------------
