@@ -60,8 +60,8 @@ ipl:
     ;-----------------------
     ; Data
     ;-----------------------
-.s0  db "Booting...", 0x0A, 0x0D, 0
-.e0  db "Error:sector read", 0
+.s0:  db "Booting...", 0x0A, 0x0D, 0
+.e0:  db "Error:sector read", 0
 
 
 ;-----------------------
@@ -148,19 +148,19 @@ stage_2:
     ;-----------------------
     ; Move to next stage
     ;-----------------------
-    jmp    stage_3rd        ; Move to the next stage
+    jmp    stage_3rd       ; Move to the next stage
 
     ;-----------------------
     ; Data
     ;-----------------------
-.s0  db "2nd stage...", 0x0A, 0x0D, 0
-.s1  db " Drive:0x"
-.p1  db "XX, C:0x"
-.p2  db "XXXX, H:0x"
-.p3  db "XX, S:0x"
-.p4  db "XX", 0x0A, 0x0D, 0
+.s0:  db "2nd stage...", 0x0A, 0x0D, 0
+.s1:  db " Drive:0x"
+.p1:  db "XX, C:0x"
+.p2:  db "XXXX, H:0x"
+.p3:  db "XX, S:0x"
+.p4:  db "XX", 0x0A, 0x0D, 0
 
-.e0  db "Can't get drive parameters.", 0
+.e0:  db "Can't get drive parameters.", 0
 
 
 ;-----------------------
@@ -208,7 +208,7 @@ stage_3rd:
     ;-----------------------
     ; Data
     ;-----------------------
-.s0  db "3rd stage...", 0x0A, 0x0D, 0
+.s0:  db "3rd stage...", 0x0A, 0x0D, 0
 
 .s1: db " Font Address="
 .p1: db "ZZZZ:"
