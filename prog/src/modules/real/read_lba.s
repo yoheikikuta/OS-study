@@ -2,6 +2,7 @@ lba_chs:
     ;-----------------------
     ; Construct stack frame
     ;-----------------------
+                           ; +8 | LBA
                            ; +6 | output buffer
                            ; +4 | parameter buffer
                            ; +2 | IP (return address)
@@ -66,6 +67,8 @@ read_lba:
     ;-----------------------
     ; Construct stack frame
     ;-----------------------
+                           ; +10 | Destination address
+                           ; +8 | Sector number to be read
                            ; +6 | LBA
                            ; +4 | parameter buffer
                            ; +2 | IP (return address)
