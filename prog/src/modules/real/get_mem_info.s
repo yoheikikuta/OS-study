@@ -70,13 +70,13 @@ ALIGN 4, db 0
     ;-----------------------
     ; Recover registers
     ;-----------------------
-    push   bp
-    push   di
-    push   si
-    push   edx
-    push   ecx
-    push   ebx
-    push   eax
+    pop    bp
+    pop    di
+    pop    si
+    pop    edx
+    pop    ecx
+    pop    ebx
+    pop    eax
 
     ret
 
