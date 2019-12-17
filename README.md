@@ -18,6 +18,7 @@ $ docker run --name os-study -it --rm -v $PWD:/work os-study
 ```
 (in the container)
 $ nasm boot.s -o boot.img -l boot.lst
+$ nasm boot.s -o boot.bin -l boot.lst && nasm kernel.s -o kernel.bin -l kernel.lst && cat boot.bin kernel.bin > boot.img
 ```
 
 ### Execution
@@ -66,6 +67,7 @@ $ ifconfig en0 | grep inet | awk '$1=="inet" {print $2}' | xargs xhost
 ```
 (in the container)
 $ nasm boot.s -o boot.img -l boot.lst
+$ nasm boot.s -o boot.bin -l boot.lst && nasm kernel.s -o kernel.bin -l kernel.lst && cat boot.bin kernel.bin > boot.img
 ```
 
 ### Execution
