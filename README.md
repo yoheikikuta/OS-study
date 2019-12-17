@@ -1,6 +1,5 @@
 # OS-study (X86 32bit)
-For my personal study.  
-Based on [this book](https://gihyo.jp/book/2019/978-4-297-10847-2).
+For my personal study, following [this book](https://gihyo.jp/book/2019/978-4-297-10847-2).
 
 
 ## Using QEMU
@@ -30,7 +29,11 @@ $ qemu-system-i386 -rtc base=localtime -drive file=boot.img,format=raw -boot ord
 $ qemu-system-i386 -rtc base=localtime -drive file=boot.img,format=raw,cyls=16,heads=2,secs=20 -boot order=c -curses
 ```
 
-Need stop container to terminate or kill the corresponding process like `ps aux | grep [q]emu-system-i386 | awk '{print $2}' | xargs kill`.
+Need stop container to terminate or kill the corresponding process like as follows. 
+```
+(in the container)
+$ ps aux | grep [q]emu-system-i386 | awk '{print $2}' | xargs kill
+```
 
 
 ## Using Bochs
@@ -72,4 +75,8 @@ $ nasm boot.s -o boot.img -l boot.lst
 $ bochs -f ../../../.bochsrc
 ```
 
-Need stop container to terminate or kill the corresponding process like `ps aux | grep [b]ochs-bin | awk '{print $2}' | xargs kill`.
+Need stop container to terminate or kill the corresponding process like as follows.
+```
+(in the container)
+$ ps aux | grep [b]ochs-bin | awk '{print $2}' | xargs kill
+```
