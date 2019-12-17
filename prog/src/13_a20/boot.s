@@ -148,7 +148,7 @@ stage_2:
     ;-----------------------
     ; Move to next stage
     ;-----------------------
-    jmp    stage_3rd       ; Move to the next stage
+    jmp    stage_3         ; Move to the next stage
 
     ;-----------------------
     ; Data
@@ -166,7 +166,7 @@ stage_2:
 ;-----------------------
 ; Third stage of boot process
 ;-----------------------
-stage_3rd:
+stage_3:
     ;-----------------------
     ; Print string
     ;-----------------------
@@ -239,10 +239,10 @@ stage_4:
     cdecl  KBC_Data_Read, .key  ; output port data
 
     mov    bl, [.key]      ; BL = key
-    or     bl, 0x20        ; BL |= 0x02
+    or     bl, 0x02        ; BL |= 0x02
 
     cdecl  KBC_Cmd_Write, 0xD1  ; Cmd of writing output port
-    cdecl  KBC_Data_Write, bx   ; output port data
+    cdecl  KBC_Data_Read, bx   ; output port data
 
     cdecl  KBC_Cmd_Write, 0xAE  ; Activate keyboard
 
