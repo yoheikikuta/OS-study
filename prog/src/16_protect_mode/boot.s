@@ -1,15 +1,15 @@
-;-----------------------
+;***********************
 ; Macro
-;-----------------------
+;***********************
 %include  "../include/define.s"
 %include  "../include/macro.s"
 
     ORG  BOOT_LOAD     ; Tell load address to assembler
 
 
-;-----------------------
+;***********************
 ; Entry point
-;-----------------------
+;***********************
 entry:
     ;-----------------------
     ; BIOS Parameter Block (BPB)
@@ -63,10 +63,9 @@ ipl:
 .s0:  db "Booting...", 0x0A, 0x0D, 0
 .e0:  db "Error:sector read", 0
 
-
-;-----------------------
+;=======================
 ; Information of boot drive
-;-----------------------
+;=======================
 ALIGN 2, db 0
 BOOT:                      ; Information about boot drive
   istruc drive
@@ -76,25 +75,22 @@ BOOT:                      ; Information about boot drive
     at  drive.sect,  dw 2  ; S - sector
   iend
 
-
-;-----------------------
+;=======================
 ; Modules
-;-----------------------
+;=======================
 %include  "../modules/real/puts.s"
 %include  "../modules/real/reboot.s"
 %include  "../modules/real/read_chs.s"
 
-
-;-----------------------
+;=======================
 ; Boot flag
-;-----------------------
+;=======================
     times  510 - ($ - $$) db 0x00
     db 0x55, 0xAA
 
-
-;-----------------------
+;=======================
 ; Information obtained in real mode
-;-----------------------
+;=======================
 FONT:                  ; font
 .seg: dw 0
 .off: dw 0
@@ -102,10 +98,9 @@ ACPI_DATA:             ; ACPI data
 .adr: dd 0             ; ACPI data address
 .len: dd 0             ; ACPI data length
 
-
-;-----------------------
+;=======================
 ; Modules  (After head 512 bytes)
-;-----------------------
+;=======================
 %include  "../modules/real/itoa.s"
 %include  "../modules/real/get_drive_param.s"
 %include  "../modules/real/get_font_adr.s"
@@ -114,9 +109,9 @@ ACPI_DATA:             ; ACPI data
 %include  "../modules/real/read_lba.s"
 
 
-;-----------------------
+;***********************
 ; Second stage of boot process
-;-----------------------
+;***********************
 stage_2:
     ;-----------------------
     ; Print string
@@ -164,9 +159,9 @@ stage_2:
 .e0:  db "Can't get drive parameters.", 0
 
 
-;-----------------------
+;***********************
 ; Third stage of boot process
-;-----------------------
+;***********************
 stage_3:
     ;-----------------------
     ; Print string
@@ -220,9 +215,9 @@ stage_3:
 .p3: db "ZZZZ"
 .p4: db "ZZZZ", 0x0A, 0x0D, 0
 
-;-----------------------
+;***********************
 ; Fourth stage of boot process
-;-----------------------
+;***********************
 stage_4:
     ;-----------------------
     ; Print string
@@ -326,9 +321,9 @@ stage_4:
 .key:  dw 0
 
 
-;-----------------------
+;***********************
 ; Fifth stage of boot process
-;-----------------------
+;***********************
 stage_5:
     ;-----------------------
     ; Print string
@@ -357,9 +352,9 @@ stage_5:
 .e0:  db "Failure load kernel...", 0x0A, 0x0D, 0
 
 
-;-----------------------
+;***********************
 ; Sixth stage of boot process
-;-----------------------
+;***********************
 stage_6:
     ;-----------------------
     ; Print string
@@ -393,37 +388,37 @@ stage_6:
       db "[Push SPACE key to move to protect mode...]", 0x0A, 0x0D, 0
 
 
-;-----------------------
+;***********************
 ; GLOBAL DESCRIPTOR TABLE
-;-----------------------
+;***********************
 ALIGN 4, db 0
 GDT:  dq 0x00_0_0_0_0_000000_0000  ; NULL
 .cs:  dq 0x00_C_F_9_A_000000_FFFF  ; CODE 4G
 .ds:  dq 0x00_C_F_9_2_000000_FFFF  ; DATA 4G
 .gdt_end:
 
-;-----------------------
+;=======================
 ; Selectors
-;-----------------------
+;=======================
 SEL_CODE  equ .cs - GDT  ; Selector for code
 SEL_DATA  equ .ds - GDT  ; Selector for data
 
-;-----------------------
+;=======================
 ; GDT
-;-----------------------
+;=======================
 GDTR:  dw GDT.gdt_end - GDT - 1  ; Limit of discriptor table
     dd     GDT         ; Address of discriptor table
 
-;-----------------------
+;=======================
 ; IDT (pseudo table to forbid intreruption)
-;-----------------------
+;=======================
 IDTR:  dw 0            ; Limit of IDT
     dd     0           ; Address of IDT
 
 
-;-----------------------
+;***********************
 ; Seventh stage of boot process
-;-----------------------
+;***********************
 stage_7:
     cli                    ; Forbid interruption
 
@@ -449,9 +444,9 @@ stage_7:
     DB     0x66            ; Operand size override prefix
     jmp    SEL_CODE:CODE_32
 
-;-----------------------
+;***********************
 ; Start 32 bit code
-;-----------------------
+;***********************
 CODE_32:
 
     ;-----------------------
@@ -479,7 +474,7 @@ CODE_32:
     jmp    KERNEL_LOAD
 
 
-;-----------------------
+;***********************
 ; Padding (set this file as 8K bytes)
-;-----------------------
+;***********************
     times BOOT_SIZE - ($ - $$) db 0
