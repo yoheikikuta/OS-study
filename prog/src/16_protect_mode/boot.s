@@ -382,15 +382,101 @@ stage_6:
     int    0x10            ; BIOS(0x10, 0x12)  Set video mode
 
     ;-----------------------
-    ; Finish procedure
+    ; Move to next stage
     ;-----------------------
-    jmp    $                ; while (1)
+    jmp    stage_7         ; Move to the next stage
 
     ;-----------------------
     ; Data
     ;-----------------------
 .s0:  db "6th stage...", 0x0A, 0x0D, 0x0A, 0x0D
       db "[Push SPACE key to move to protect mode...]", 0x0A, 0x0D, 0
+
+
+;-----------------------
+; GLOBAL DESCRIPTOR TABLE
+;-----------------------
+ALIGN 4, db 0
+GDT:  dq 0x00_0_0_0_0_000000_0000  ; NULL
+.cs:  dq 0x00_C_F_9_A_000000_FFFF  ; CODE 4G
+.ds:  dq 0x00_C_F_9_2_000000_FFFF  ; DATA 4G
+.gdt_end:
+
+;-----------------------
+; Selectors
+;-----------------------
+SEL_CODE  equ .cs - GDT  ; Selector for code
+SEL_DATA  equ .ds - GDT  ; Selector for data
+
+;-----------------------
+; GDT
+;-----------------------
+GDTR:  dw GDT.gdt_end - GDT - 1  ; Limit of discriptor table
+    dd     GDT         ; Address of discriptor table
+
+;-----------------------
+; IDT (pseudo table to forbid intreruption)
+;-----------------------
+IDTR:  dw 0            ; Limit of IDT
+    dd     0           ; Address of IDT
+
+
+;-----------------------
+; Seventh stage of boot process
+;-----------------------
+stage_7:
+    cli                    ; Forbid interruption
+
+    ;-----------------------
+    ; Load GDT
+    ;-----------------------
+    lgdt   [GDTR]          ; Load global discriptor table
+    lidt   [IDTR]          ; Load interruption discriptor table
+
+    ;-----------------------
+    ; Move to protect mode
+    ;-----------------------
+    mov    eax, cr0        ; Set PE Booting
+    or     ax, 1           ; CR0 |= 1
+    mov    cr0, eax
+
+    jmp    $ + 2           ; Clear prefetched instructions
+
+    ;-----------------------
+    ; Jump between segments
+    ;-----------------------
+[BITS 32]
+    DB     0x66            ; Operand size override prefix
+    jmp    SEL_CODE:CODE_32
+
+;-----------------------
+; Start 32 bit code
+;-----------------------
+CODE_32:
+
+    ;-----------------------
+    ; Initialize selectors
+    ;-----------------------
+    mov    ax, SEL_DATA
+    mov    ds, ax
+    mov    es, ax
+    mov    fs, ax
+    mov    gs, ax
+    mov    ss, ax
+
+    ;-----------------------
+    ; Copy kernel part
+    ;-----------------------
+    mov    ecx, (KERNEL_SIZE) / 4  ; ECX = (copy in 4 bytes unit)
+    mov    esi, BOOT_END   ; ESI = 0x0000_9C00 (kernel part)
+    mov    edi, KERNEL_LOAD  ; EDI = 0x0010_1000 (upper part memory)
+    cld                    ; Clear DF
+    rep    movsd           ; while (--ECX) *EDI++ = *ESI++
+
+    ;-----------------------
+    ; Move to kernel processing
+    ;-----------------------
+    jmp    KERNEL_LOAD
 
 
 ;-----------------------
