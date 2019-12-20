@@ -23,7 +23,7 @@ draw_char:
     ;-----------------------
     ; Set copy font address
     ;-----------------------
-    movzx  esi, byte [ebp +20]  ; CL = (character code)
+    movzx  esi, byte [ebp + 20]  ; CL = (character code)
     shl    esi, 4          ; CL *= 16  16bytes per character
     add    esi, [FONT_ADR]  ; ESI = (font address)
 

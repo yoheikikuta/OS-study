@@ -162,9 +162,9 @@ vram_font_copy:
     ;-----------------------
     ; Recover registers
     ;-----------------------
+    pop    edi
     pop    esi
     pop    edx
-    pop    edi
     pop    ecx
     pop    ebx
     pop    eax
