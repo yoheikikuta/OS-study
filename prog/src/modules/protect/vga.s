@@ -176,3 +176,64 @@ vram_font_copy:
     pop    ebp
     
     ret
+
+
+vram_bit_copy:
+    ;-----------------------
+    ; Create stack frame
+    ;-----------------------
+                           ; +20 | color
+                           ; +16 | plane
+                           ; +12 | VRAM address
+                           ; +8 | bit pattern
+                           ; +4 | return address (32bits = 4bytes)
+    push   ebp             ; BP + 0 | BP
+    mov    ebp, esp
+
+    ;-----------------------
+    ; Save registers
+    ;-----------------------
+    push   eax
+    push   ebx
+    push   edi
+
+    ;-----------------------
+    ; Copy bits
+    ;-----------------------
+    mov    edi, [ebp + 12]
+    movzx  eax, byte [ebp + 16]
+    movzx  ebx, word [ebp + 20]
+
+    test   bl, al
+    setz   bl
+    dec bl
+
+    ;-----------------------
+    ; Flip
+    ;-----------------------
+    mov    al, [ebp + 8]   ; AL = (output bit pattern)
+    mov    ah, al          ; AH -= AL (!output bit pattern)
+    not    ah
+
+    ;-----------------------
+    ; Drawing
+    ;-----------------------
+    and    ah, [edi]       ; AH = (current value & !output bit pattern)
+    and    al, bl          ; AL = (display color & output bit pattern)
+    or     al, ah          ; AL |= AH
+    mov    [edi], al       ; [EDI] = BL
+
+    ;-----------------------
+    ; Recover registers
+    ;-----------------------
+    pop    edi
+    pop    ebx
+    pop    eax
+
+    ;-----------------------
+    ; Discard stack frame
+    ;-----------------------
+    mov    esp, ebp
+    pop    ebp
+
+    ret
