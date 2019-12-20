@@ -4,7 +4,7 @@
 %include  "../include/define.s"
 %include  "../include/macro.s"
 
-    ORG  BOOT_LOAD     ; load address of kernel
+    ORG  KERNEL_LOAD     ; load address of kernel
 
 [BITS 32]
 ;-----------------------
