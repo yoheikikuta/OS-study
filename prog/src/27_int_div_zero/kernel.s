@@ -40,6 +40,11 @@ kernel:
     cdecl  draw_str, 25, 14, 0x010F, .s0  ; draw_str()
 
     ;-----------------------
+    ; Call interruption for checking
+    ;-----------------------
+    int    0
+
+    ;-----------------------
     ; Zero division
     ;-----------------------
     mov    al, 0           ; AL = 0
