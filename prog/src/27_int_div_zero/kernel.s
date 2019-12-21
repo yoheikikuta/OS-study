@@ -32,6 +32,7 @@ kernel:
     ; Discplay all fonts
     ;-----------------------
     cdecl  draw_font, 63, 13  ; Display all fonts
+    cdecl  draw_color_bar, 63, 4  ; Display color bars
 
     ;-----------------------
     ; Draw string
