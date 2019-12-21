@@ -16,6 +16,14 @@ rtc_get_time:
     ;-----------------------
     ; Get time
     ;-----------------------
+    mov    al, 0x0A        ; AL = 0x0A
+    out    0x70, al        ; outp(0x70, AL)
+    in     al, 0x71        ; AL = inp(0x71)
+    test   al, 0x80        ; if (UIP)  if data is updating now
+    je     .10F
+    mov    eax, 1          ; ret = 1 (data is updating)
+    jmp    .10E
+.10F:
     mov    al, 0x04        ; AL = 0x04
     out    0x70, al        ; outp(0x70, AL)
     in     al, 0x71        ; AL = inp(0x71)  hour
@@ -34,6 +42,7 @@ rtc_get_time:
 
     mov    ebx, [ebp + 8]  ; dst = (save address)
     mov    [ebx], eax      ; [dst] = (time information)
+.10E:
 
     ;-----------------------
     ; Recover registers
