@@ -1,5 +1,4 @@
 %macro cdecl 1-*.nolist
-
     %rep %0 - 1
       push   %{-1:-1}
       %rotate -1
@@ -11,7 +10,21 @@
     %if 1 < %0
       add    sp, (__BITS__ >> 3) * (%0 - 1)
     %endif
+%endmacro
 
+%macro set_vect 1-*
+    push   eax
+    push   edi
+
+    mov    edi, VECT_BASE + (%1 * 8)  ; Vector address
+    mov    eax, %2
+
+    mov    [edi + 0], ax              ; Exception address [15:0]
+    shr    eax, 16
+    mov    [edi + 6], ax              ; Exception address [31:16]
+
+    pop    edi
+    pop    eax
 %endmacro
 
 struc drive
