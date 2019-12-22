@@ -39,13 +39,13 @@ kernel:
     ;-----------------------
     ; Set Interrupt Mask Register
     ;-----------------------
-    outp   0x21, 0b1111_1011  ; Enable interruption: slave PIC
-    outp   0xA1, 0b1111_1110  ; Enable interruption: RTC
+    outp   0x21, 0b1111_1011  ; Activate interruption: slave PIC
+    outp   0xA1, 0b1111_1110  ; Activate interruption: RTC
 
     ;-----------------------
     ; Permit CPU interruption
     ;-----------------------
-    sti                    ; permit interruption
+    sti                    ; Permit interruption
 
     ;-----------------------
     ; Discplay all fonts
@@ -63,7 +63,7 @@ kernel:
     ;-----------------------
 .10L:
     mov    eax, [RTC_TIME]  ; Get time
-    cdecl  draw_time, 72, 0, 0x0700, dword [RTC_TIME]
+    cdecl  draw_time, 72, 0, 0x0700, eax
     jmp    .10L             ; while (1)
 
     ;-----------------------
