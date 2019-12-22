@@ -48,7 +48,7 @@ kernel:
     ; Zero division
     ;-----------------------
     mov    al, 0           ; AL = 0
-    div    al              ; Zero division
+    div    al              ; Zero division (corresponding vector number is 0 in x86)
 
     ;-----------------------
     ; Display time
