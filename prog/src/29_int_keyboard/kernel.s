@@ -40,8 +40,8 @@ kernel:
     ;-----------------------
     ; Set Interrupt Mask Register
     ;-----------------------
-    outp   0x21, 0b1111_1001  ; Activate interruption: slave PIC/KBC
-    outp   0xA1, 0b1111_1110  ; Activate interruption: RTC
+    outp   0x21, 0b_1111_1001  ; Activate interruption: slave PIC/KBC
+    outp   0xA1, 0b_1111_1110  ; Activate interruption: RTC
 
     ;-----------------------
     ; Permit CPU interruption
@@ -59,12 +59,12 @@ kernel:
     ;-----------------------
     cdecl  draw_str, 25, 14, 0x010F, .s0  ; draw_str()
 
+.10L:
     ;-----------------------
     ; Display time
     ;-----------------------
-.10L:
-;    mov    eax, [RTC_TIME]  ; Get time
-;    cdecl  draw_time, 72, 0, 0x0700, eax
+    mov    eax, [RTC_TIME]  ; Get time
+    cdecl  draw_time, 72, 0, 0x0700, eax
 
     ;-----------------------
     ; Display key code
@@ -78,6 +78,7 @@ kernel:
     jmp    .10L
 
 .s0:  db " Hello, kernel! ", 0
+
 .int_key:  dd 0
 
 ALIGN 4, db 0
@@ -102,11 +103,11 @@ RTC_TIME:  dd 0
 %include "../modules/protect/interrupt.s"
 %include "../modules/protect/pic.s"
 %include "../modules/protect/int_rtc.s"
-%include "../modules/protect/ring_buff.s"
 %include "../modules/protect/int_keyboard.s"
+%include "../modules/protect/ring_buff.s"
 
 
 ;***********************
 ; Padding
 ;***********************
-    times KERNEL_SIZE - ($ - $$) db 0  ; padding
+    times KERNEL_SIZE - ($ - $$) db 0x00  ; padding
