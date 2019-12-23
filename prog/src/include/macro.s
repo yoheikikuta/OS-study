@@ -36,6 +36,26 @@
     out    %1, al
 %endmacro
 
+%macro set_desc 2-*
+    push   eax
+    push   edi
+
+    mov    edi, %1                    ; Discriptor adress
+    mov    eax, %2                    ; Base address
+
+    %if 3 == %0
+      mov [edi + 0], %3
+    %endif
+
+    mov    [edi + 2], ax              ; Exception address [15:0]
+    shr    eax, 16
+    mov    [edi + 4], al              ; Exception address [23:16]
+    mov    [edi + 7], ah              ; Exception address [31:24]
+
+    pop    edi
+    pop    eax
+%endmacro
+
 struc drive
     .no     resw 1  ; drive number
     .cyln   resw 1  ; cylinder
