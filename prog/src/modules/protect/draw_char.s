@@ -4,8 +4,8 @@ draw_char:
     ;-----------------------
                            ; +20 | ch
                            ; +16 | color
-                           ; +12 | col (0 ~ 29)
-                           ; +8 | row (0 ~ 79)
+                           ; +12 | row (Y: 0 ~ 29)  16 * 30 = 480
+                           ; +8 | column (X: 0 ~ 79)  8 * 80 = 640
                            ; +4 | return address (32bits = 4bytes)
     push   ebp             ; BP + 0 | BP
     mov    ebp, esp

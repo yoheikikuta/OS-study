@@ -4,8 +4,8 @@ draw_str:
     ;-----------------------
                            ; +20 | p (address of string)
                            ; +16 | color
-                           ; +12 | column
-                           ; +8 | row
+                           ; +12 | row (Y)
+                           ; +8 | column (X)
                            ; +4 | return address (32bits = 4bytes)
     push   ebp             ; BP + 0 | BP
     mov    ebp, esp
@@ -13,17 +13,17 @@ draw_str:
     ;-----------------------
     ; Save registers
     ;-----------------------
-    push    eax
-    push    ebx
-    push    ecx
-    push    edx
-    push    esi
+    push   eax
+    push   ebx
+    push   ecx
+    push   edx
+    push   esi
 
     ;-----------------------
     ; Get arguments
     ;-----------------------
-    mov    ecx, [ebp + 8]  ; ESI = (colum)
-    mov    edx, [ebp + 12]  ; ESI = (row)
+    mov    ecx, [ebp + 8]  ; ECX = (colum)
+    mov    edx, [ebp + 12]  ; EDX = (row)
     movzx  ebx, word [ebp + 16]  ; EBX = (display color)
     mov    esi, [ebp + 20]  ; ESI = (address of string)
 
