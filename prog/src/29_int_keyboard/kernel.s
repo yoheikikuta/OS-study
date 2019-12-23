@@ -63,8 +63,8 @@ kernel:
     ; Display time
     ;-----------------------
 .10L:
-    mov    eax, [RTC_TIME]  ; Get time
-    cdecl  draw_time, 72, 0, 0x0700, eax
+;    mov    eax, [RTC_TIME]  ; Get time
+;    cdecl  draw_time, 72, 0, 0x0700, eax
 
     ;-----------------------
     ; Display key code
