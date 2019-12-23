@@ -19,6 +19,10 @@
     mov    edi, VECT_BASE + (%1 * 8)  ; Vector address
     mov    eax, %2
 
+    %if 3 == %0
+      mov [edi + 4], %3
+    %endif
+
     mov    [edi + 0], ax              ; Exception address [15:0]
     shr    eax, 16
     mov    [edi + 6], ax              ; Exception address [31:16]
@@ -37,4 +41,13 @@ struc drive
     .cyln   resw 1  ; cylinder
     .head   resw 1  ; head
     .sect   resw 1  ; sector
+endstruc
+
+%define RING_ITEM_SIZE (1 << 4)
+%define RING_INDEX_MASK (RING_ITEM_SIZE - 1)
+
+struc ring_buff
+    .rp resd 1                 ; Reading position
+    .wp resd 1                 ; Writing position
+    .item resb RING_ITEM_SIZE  ; buffer
 endstruc
