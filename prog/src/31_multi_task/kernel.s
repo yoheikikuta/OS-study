@@ -23,7 +23,7 @@ kernel:
     mov    [FONT_ADR], eax  ; FONT_ADR[0] = EAX
 
     ;-----------------------
-    ; Set TSS discriptor
+    ; Set TSS descriptor
     ;-----------------------
     set_desc  GDT.tss_0, TSS_0  ; TSS setting for taks 0
     set_desc  GDT.tss_1, TSS_1  ; TSS setting for taks 1

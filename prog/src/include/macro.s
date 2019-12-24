@@ -40,7 +40,7 @@
     push   eax
     push   edi
 
-    mov    edi, %1                    ; Discriptor adress
+    mov    edi, %1                    ; Descriptor adress
     mov    eax, %2                    ; Base address
 
     %if 3 == %0

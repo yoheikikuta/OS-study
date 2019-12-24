@@ -65,22 +65,22 @@ TSS_1:
 GDT:         dq 0x0000000000000000  ; NULL
 .cs_kernel:  dq 0x00_CF9A_000000_FFFF  ; CODE 4G
 .ds_kernel:  dq 0x00_CF92_000000_FFFF  ; DATA 4G
-.ldt         dq 0x00_0082_000000_0000  ; LDT discriptor
+.ldt         dq 0x00_0082_000000_0000  ; LDT descriptor
 .tss_0:      dq 0x00_0089_000000_0067  ; 0x67 = 103  Limit
 .tss_1:      dq 0x00_0089_000000_0067
 .end:
 
-CS_KERNEL   equ .cs_kernel - GDT
-DS_KERNEL   equ .ds_kernel - GDT
-SS_LDT      equ .ldt - GDT
-SS_TASK_0   equ .tss_0 - GDT
-SS_TASK_1   equ .tss_1 - GDT
+CS_KERNEL  equ .cs_kernel - GDT
+DS_KERNEL  equ .ds_kernel - GDT
+SS_LDT     equ .ldt - GDT
+SS_TASK_0  equ .tss_0 - GDT
+SS_TASK_1  equ .tss_1 - GDT
 
-GDTR:   dw GDT.end - GDT - 1
-        dd GDT
+GDTR:  dw GDT.end - GDT - 1
+       dd GDT
 
 ;***********************
-; Local Discriptor Table (LDT)
+; Local Descriptor Table (LDT)
 ;***********************
 LDT:         dq 0x0000000000000000  ; NULL
 .cs_task_0:  dq 0x00_CF9A_000000_FFFF  ; CODE 4G
@@ -89,9 +89,9 @@ LDT:         dq 0x0000000000000000  ; NULL
 .ds_task_1:  dq 0x00_CF92_000000_FFFF  ; DATA 4G
 .end:
 
-CS_TASK_0   equ (.cs_task_0 - LDT) | 4  ; CS selector for task 0  Need to set BIT2 to refer LDT
-DS_TASK_0   equ (.ds_task_0 - LDT) | 4  ; DS selector for task 0
-CS_TASK_1   equ (.cs_task_1 - LDT) | 4  ; CS selector for task 1
-DS_TASK_1   equ (.ds_task_1 - LDT) | 4  ; DS selector for task 1
+CS_TASK_0  equ (.cs_task_0 - LDT) | 4  ; CS selector for task 0  Need to set BIT2 to refer LDT
+DS_TASK_0  equ (.ds_task_0 - LDT) | 4  ; DS selector for task 0
+CS_TASK_1  equ (.cs_task_1 - LDT) | 4  ; CS selector for task 1
+DS_TASK_1  equ (.ds_task_1 - LDT) | 4  ; DS selector for task 1
 
-LDT_LIMIT   equ .end - LDT - 1
+LDT_LIMIT  equ .end - LDT - 1

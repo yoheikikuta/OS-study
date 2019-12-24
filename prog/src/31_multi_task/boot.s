@@ -406,8 +406,8 @@ SEL_DATA  equ .ds - GDT  ; Selector for data
 ;=======================
 ; GDT
 ;=======================
-GDTR:  dw GDT.gdt_end - GDT - 1  ; Limit of discriptor table
-    dd     GDT         ; Address of discriptor table
+GDTR:  dw GDT.gdt_end - GDT - 1  ; Limit of descriptor table
+    dd     GDT         ; Address of descriptor table
 
 ;=======================
 ; IDT (pseudo table to forbid intreruption)
@@ -425,8 +425,8 @@ stage_7:
     ;-----------------------
     ; Load GDT
     ;-----------------------
-    lgdt   [GDTR]          ; Load global discriptor table
-    lidt   [IDTR]          ; Load interruption discriptor table
+    lgdt   [GDTR]          ; Load global descriptor table
+    lidt   [IDTR]          ; Load interruption descriptor table
 
     ;-----------------------
     ; Move to protect mode
