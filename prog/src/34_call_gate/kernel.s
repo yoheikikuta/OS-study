@@ -29,6 +29,11 @@ kernel:
     set_desc  GDT.tss_1, TSS_1  ; TSS setting for taks 1
 
     ;-----------------------
+    ; Set call gate
+    ;-----------------------
+    set_gate  GDT.call_gate, call_gate
+
+    ;-----------------------
     ; Set LDT
     ;-----------------------
     set_desc  GDT.ldt, LDT, word LDT_LIMIT
@@ -141,6 +146,7 @@ RTC_TIME:  dd 0
 %include "../modules/protect/ring_buff.s"
 %include "../modules/protect/timer.s"
 %include "../modules/protect/draw_rotation_bar.s"
+%include "../modules/protect/call_gate.s"
 
 ;***********************
 ; Padding

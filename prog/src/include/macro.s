@@ -58,6 +58,24 @@
     pop    eax
 %endmacro
 
+; Register functions in the call gate
+; e.g.) set_gate  GDT.call_gate, call_gate
+%macro set_gate 2-*
+    push   eax
+    push   edi
+
+    mov    edi, %1                    ; Descriptor adress
+    mov    eax, %2                    ; Base address
+
+    mov    [edi + 0], ax              ; offset [15:0] of total [31:0]
+    shr    eax, 16
+    mov    [edi + 6], ax              ; offset [31:16] of total [31:0]
+
+    pop    edi
+    pop    eax
+%endmacro
+
+
 struc drive
     .no     resw 1  ; drive number
     .cyln   resw 1  ; cylinder

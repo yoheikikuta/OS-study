@@ -61,13 +61,14 @@ TSS_1:
 ;***********************
 ; Global Disk scriptor Table (GDT)
 ;***********************
-; See http://www.ics.p.lodz.pl/~dpuchala/LowLevelProgr/Old/Lecture2.pdf, for example.
+; See https://stackoverflow.com/questions/37554399/what-is-the-use-of-defining-a-global-descriptor-table?rq=1 in detail.
 GDT:         dq 0x0000000000000000  ; NULL
 .cs_kernel:  dq 0x00_CF9A_000000_FFFF  ; CODE 4G
 .ds_kernel:  dq 0x00_CF92_000000_FFFF  ; DATA 4G
 .ldt         dq 0x00_0082_000000_0000  ; LDT descriptor
 .tss_0:      dq 0x00_0089_000000_0067  ; 0x67 = 103  Limit
 .tss_1:      dq 0x00_0089_000000_0067
+.call_gate:  dq 0x00_00EC_040008_0000  ; 386 call gate  DPL=3, count=4, SEL=8
 .end:
 
 CS_KERNEL  equ .cs_kernel - GDT
@@ -75,6 +76,7 @@ DS_KERNEL  equ .ds_kernel - GDT
 SS_LDT     equ .ldt - GDT
 SS_TASK_0  equ .tss_0 - GDT
 SS_TASK_1  equ .tss_1 - GDT
+SS_GATE_0  equ .call_gate - GDT
 
 GDTR:  dw GDT.end - GDT - 1
        dd GDT
