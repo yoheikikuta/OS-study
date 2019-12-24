@@ -75,6 +75,11 @@ ring_wr:
     push   esi
 
     ;-----------------------
+    ; Get arguments
+    ;-----------------------
+    mov    esi, [ebp + 8]  ; ESI = (ring buffer address)
+
+    ;-----------------------
     ; Check writing position
     ;-----------------------
     mov    eax, 0          ; EAX = 0  returning value (0 is failure)
