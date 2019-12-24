@@ -64,6 +64,7 @@ kernel:
     ; Permit device interruption
     ;-----------------------
     cdecl  rtc_int_en, 0x10  ; rtc_int_en(UIE)
+    cdecl  int_en_timer0     ; Permit timer iterruption
 
     ;-----------------------
     ; Set Interrupt Mask Register
@@ -90,7 +91,7 @@ kernel:
     ;-----------------------
     ; Call taks1
     ;-----------------------
-    call   SS_TASK_1:0
+    call   SS_TASK_1:0     ; inter-segment call instruction
 
 .10L:
     ;-----------------------
