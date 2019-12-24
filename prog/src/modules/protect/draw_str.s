@@ -36,7 +36,12 @@ draw_str:
     cmp    al, 0           ; if (0 == AL)
     je     .10E
 
-    cdecl  draw_char, ecx, edx, ebx, eax  ; draw_char()
+    %ifdef USE_SYSTEM_CALL
+        int    0x81        ; sys_call(1, X, Y, color, character)
+    %else
+        cdecl  draw_char, ecx, edx, ebx, eax  ; draw_char()
+    %endif
+
     inc    ecx             ; ECX++  move column
 
     cmp    ecx, 80         ; if (80 <= ECX)

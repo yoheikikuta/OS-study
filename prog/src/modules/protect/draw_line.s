@@ -101,7 +101,16 @@ draw_line:
     ; Draw line
     ;-----------------------
 .50L:
-    cdecl  draw_pixel, dword [ebp - 8], dword [ebp - 20], dword [ebp + 24]
+    %ifdef USE_SYSTEM_CALL
+        mov    eax, ecx    ; Save repeated number since ECX is used to save sum var.
+        mov    ebx, [ebp + 24]  ; EBX = (color)
+        mov    ecx, [ebp - 8]  ; ECX = X
+        mov    edx, [ebp - 20] ; EDX = Y
+        int    0x82        ; sys_call(1, X, Y, color, character); BX(C), CX(X), DX(Y)
+        mov    ecx, eax
+    %else
+        cdecl  draw_pixel, dword [ebp - 8], dword [ebp - 20], dword [ebp + 24]
+    %endif
 
     mov    eax, [esi - 8]
     add    [esi - 0], eax
@@ -111,7 +120,7 @@ draw_line:
     mov    ebx, [esi - 4]
 
     cmp    eax, ebx
-jl .52E
+    jl     .52E
     sub    eax, ebx
 
     mov    ebx, [edi - 8]
