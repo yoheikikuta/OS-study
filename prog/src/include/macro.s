@@ -36,21 +36,23 @@
     out    %1, al
 %endmacro
 
+; Set base address and limit of LDT
+; e.g.) set_desc  GDT.ldt, LDT, word LDT_LIMIT
 %macro set_desc 2-*
     push   eax
     push   edi
 
-    mov    edi, %1                    ; Descriptor adress
+    mov    edi, %1                    ; Descriptor address
     mov    eax, %2                    ; Base address
 
     %if 3 == %0
-      mov [edi + 0], %3
+      mov [edi + 0], %3               ; Segment Limit [15:0] (%3 is word and it's 16bit)
     %endif
 
-    mov    [edi + 2], ax              ; Exception address [15:0]
+    mov    [edi + 2], ax              ; Segment base address [15:0] of total [31:0]
     shr    eax, 16
-    mov    [edi + 4], al              ; Exception address [23:16]
-    mov    [edi + 7], ah              ; Exception address [31:24]
+    mov    [edi + 4], al              ; Segment base address [23:16] of total [31:0]
+    mov    [edi + 7], ah              ; Segment base address [31:24] of total [31:0]
 
     pop    edi
     pop    eax
