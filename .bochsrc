@@ -1,3 +1,4 @@
 ata0-master: type=disk, path=boot.img, mode=flat, cylinders=20, heads=2, spt=16, translation=auto
 boot: disk
 cpu: ips=30000000
+magic_break: enabled=1

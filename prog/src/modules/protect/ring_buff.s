@@ -160,8 +160,6 @@ draw_key:
     loop .10L
 .10E:
 
-.tmp:   db "-- ", 0
-
     ;-----------------------
     ; Recover registers
     ;-----------------------
@@ -174,3 +172,5 @@ draw_key:
     pop    ebp
 
     ret
+
+.tmp:   db "-- ", 0
