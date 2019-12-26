@@ -23,3 +23,4 @@ STACK_BASE  equ  0x0010_3000  ; Stack area for task
 STACK_SIZE  equ  1024  ; Stack size
 SP_TASK_0  equ  STACK_BASE + (STACK_SIZE * 1)
 SP_TASK_1  equ  STACK_BASE + (STACK_SIZE * 2)
+SP_TASK_2  equ  STACK_BASE + (STACK_SIZE * 3)
