@@ -91,3 +91,22 @@ struc ring_buff
     .wp resd 1                 ; Writing position
     .item resb RING_ITEM_SIZE  ; buffer
 endstruc
+
+struc rose
+    .x0       resd 1  ; left top x
+    .y0       resd 1  ; left top y
+    .x1       resd 1  ; right bottom x
+    .y1       resd 1  ; right bottom y
+
+    .n        resd 1  ; variable n
+    .d        resd 1  ; variable d
+
+    .color_x  resd 1  ; draw color x
+    .color_y  resd 1  ; draw color y
+    .color_z  resd 1  ; draw color frame
+    .color_s  resd 1  ; draw color character
+    .color_f  resd 1  ; draw color graph drawing
+    .color_b  resd 1  ; draw color graph erasing
+    
+    .title    resb 16  ; title
+endstruc
