@@ -40,3 +40,16 @@ CR3_BASE  equ 0x0010_5000  ; Page translation table for task 3
 CR3_TASK_4  equ  0x0020_0000  ; Page translation table for task 4
 CR3_TASK_5  equ  0x0020_2000  ; Page translation table for task 5
 CR3_TASK_6  equ  0x0020_4000  ; Page translation table for task 6
+
+
+; FAT information
+FAT_SIZE  equ  (1024 * 128)
+ROOT_SIZE  equ  (1024 * 16)
+
+FAT1_START  equ  (KERNEL_SIZE)
+FAT2_START  equ  (FAT1_START + FAT_SIZE)
+ROOT_START  equ  (FAT2_START + FAT_SIZE)
+FILE_START  equ  (ROOT_START + ROOT_SIZE)
+
+ATTR_VOLUME_ID  equ  0x08
+ATTR_ARCHIVE  equ  0x20
