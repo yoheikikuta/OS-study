@@ -22,7 +22,7 @@ memcmp:
     ;-----------------------
     cld
     mov    si, [bp + 4]
-    mov    di, [bp + 8]
+    mov    di, [bp + 6]
     mov    cx, [bp + 8]
 
     ;-----------------------
