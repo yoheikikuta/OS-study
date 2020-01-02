@@ -1,5 +1,6 @@
 # OS-study (X86 32bit)
-For my personal study, following [this book](https://gihyo.jp/book/2019/978-4-297-10847-2).
+For my personal study, following [this book](https://gihyo.jp/book/2019/978-4-297-10847-2).  
+Development environment is macOS + docker.
 
 
 ## Using Bochs
